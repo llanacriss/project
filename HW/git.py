@@ -29,7 +29,7 @@ def copy():
 #Перемещение файла/папки в другую папку
 def move():
     name = input('Название файла/папки: ')
-    folder_name = input('Введите папку, куда необходимо скопировать файл/папку: ')
+    folder_name = input('Введите папку, куда необходимо переместить файл/папку: ')
     if os.path.isfile(name):
         shutil.move(name, folder_name)
     elif os.path.isdir(name):
