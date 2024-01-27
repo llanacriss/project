@@ -9,32 +9,49 @@ def create_folder():
         os.makedirs(name)
     else:
         print('Папка с таким названием уже существует')
-        main_menu()
+    main_menu()
 
 #Создание нового файла
 def create_file():
     name = input('Название файла (с расширением): ')
-    file = open(name, 'w')
+    if not os.path.isfile(name):
+        file = open(name, 'w')
+    else:
+        print('Файл с таким названием уже существует')
+    main_menu()
 
 #Копирование файла/папки
 def copy():
     name = input('Название файла/папки: ')
     folder_name = input('Введите папку, куда необходимо скопировать файл/папку: ')
     if os.path.isfile(name):
-        shutil.copy2(name, folder_name)
+        if not os.path.isfile(folder_name + '\\' + name):
+            shutil.copy2(name, folder_name)
+        else:
+            print('Файл с таким названием уже существует в этой папке')
     elif os.path.isdir(name):
-        new_name = input('Новое имя: ')
-        shutil.copytree(name, new_name)
+        new_path = folder_name + '\\' + name
+        if not os.path.isdir(new_path):
+            shutil.copytree(name, new_path)
+        else:
+            print('Папка с таким названием уже существует в этой папке')
+    main_menu()
 
 #Перемещение файла/папки в другую папку
 def move():
     name = input('Название файла/папки: ')
     folder_name = input('Введите папку, куда необходимо переместить файл/папку: ')
     if os.path.isfile(name):
-        shutil.move(name, folder_name)
+        if not os.path.isfile(folder_name + '\\' + name):
+            shutil.move(name, folder_name)
+        else:
+            print('Файл с таким названием уже существует в этой папке')
     elif os.path.isdir(name):
-        new_name = input('Новое имя: ')
-        shutil.move(name, new_name)
+        if not os.path.isdir(folder_name + '\\' + name):
+            shutil.move(name, folder_name)
+        else:
+            print('Папка с таким названием уже существует в этой папке')
+    main_menu()
 
 #Удаление файла/папки
 def delete():
@@ -43,6 +60,7 @@ def delete():
         os.remove(name)
     elif os.path.isdir(name):
         os.rmdir(name)
+    main_menu()
 
 #Главное меню
 def main_menu():
